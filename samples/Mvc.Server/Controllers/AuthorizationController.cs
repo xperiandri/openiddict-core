@@ -4,6 +4,7 @@
  * the license and the contributors participating to this project.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -29,13 +30,13 @@ namespace Mvc.Server
 {
     public class AuthorizationController : Controller
     {
-        private readonly OpenIddictApplicationManager<OpenIddictApplication> _applicationManager;
+        private readonly OpenIddictApplicationManager<OpenIddictApplication<Guid>> _applicationManager;
         private readonly IOptions<IdentityOptions> _identityOptions;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthorizationController(
-            OpenIddictApplicationManager<OpenIddictApplication> applicationManager,
+            OpenIddictApplicationManager<OpenIddictApplication<Guid>> applicationManager,
             IOptions<IdentityOptions> identityOptions,
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager)

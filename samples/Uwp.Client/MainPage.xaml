@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="Uwp.Client.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Uwp.Client"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.TopAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Label="general" Click="GenralLoginButtonClick">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe UI" Glyph="General"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Label="twitter" Foreground="White" Background="#FF46C0FB">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe UI" Glyph="t"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="google" Foreground="White" Background="#FFDD4B39">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="G+" FontFamily="Segoe UI"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="github">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="GitHub" FontFamily="Segoe UI"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    </Grid>
+</Page>

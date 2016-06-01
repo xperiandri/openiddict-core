@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AspNet.Security.OpenIdConnect.Primitives;
@@ -34,12 +35,12 @@ namespace Mvc.Server
                 // Register the entity sets needed by OpenIddict.
                 // Note: use the generic overload if you need
                 // to replace the default OpenIddict entities.
-                options.UseOpenIddict();
+                options.UseOpenIddict<Guid>();
             });
 
             // Register the Identity services.
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<ApplicationUser, UserRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext, Guid>()
                 .AddDefaultTokenProviders();
 
             // Configure Identity to use the same JWT claims as OpenIddict instead
@@ -53,7 +54,7 @@ namespace Mvc.Server
             });
 
             // Register the OpenIddict services.
-            services.AddOpenIddict(options =>
+            services.AddOpenIddict<Guid>(options =>
             {
                 // Register the Entity Framework stores.
                 options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
@@ -160,6 +161,12 @@ namespace Mvc.Server
                     ConsumerKey = "6XaCTaLbMqfj6ww3zvZ5g",
                     ConsumerSecret = "Il2eFzGIrYhz6BWjYhVXBPQSfZuS4xoHpSSyD9PI"
                 });
+
+                //branch.UseGitHubAuthentication(new GitHubAuthenticationOptions {
+                //    ClientId = "49e302895d8b09ea5656",
+                //    ClientSecret = "98f1bf028608901e9df91d64ee61536fe562064b",
+                //    Scope = { "user:email" }
+                //});
             });
 
             app.UseOpenIddict();
@@ -179,11 +186,11 @@ namespace Mvc.Server
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 await context.Database.EnsureCreatedAsync();
 
-                var manager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication>>();
+                var manager = scope.ServiceProvider.GetRequiredService<OpenIddictApplicationManager<OpenIddictApplication<Guid>>>();
 
                 if (await manager.FindByClientIdAsync("mvc", cancellationToken) == null)
                 {
-                    var application = new OpenIddictApplication
+                    var application = new OpenIddictApplication<Guid>
                     {
                         ClientId = "mvc",
                         DisplayName = "MVC client application",
@@ -205,7 +212,7 @@ namespace Mvc.Server
                 // * Request access token locally: yes
                 if (await manager.FindByClientIdAsync("postman", cancellationToken) == null)
                 {
-                    var application = new OpenIddictApplication
+                    var application = new OpenIddictApplication<Guid>
                     {
                         ClientId = "postman",
                         DisplayName = "Postman",
@@ -213,6 +220,19 @@ namespace Mvc.Server
                     };
 
                     await manager.CreateAsync(application, cancellationToken);
+
+                }
+
+                if (await manager.FindByClientIdAsync("UWP", cancellationToken) == null) {
+                    var application = new OpenIddictApplication<Guid> {
+                        ClientId = "UWP",
+                        DisplayName = "Universal Windows Platform App",
+                        RedirectUri = "ms-app://s-1-15-2-465349658-3448318793-949335766-3032290474-2823455916-3491362191-2125354643/",
+                        LogoutRedirectUri = "",
+                        Type = OpenIddictConstants.ClientTypes.Confidential
+                    };
+
+                    await manager.CreateAsync(application, "uwp_uwp_uwp", cancellationToken);
                 }
             }
         }
