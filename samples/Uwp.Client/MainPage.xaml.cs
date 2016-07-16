@@ -1,11 +1,12 @@
-﻿using JoseRT;
+﻿using IdentityModel.OidcClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Threading.Tasks;
-using Thinktecture.IdentityModel.Client;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -28,7 +29,7 @@ namespace Uwp.Client
     public sealed partial class MainPage : Page
     {
         public const string AuthenticationScheme = "OpenIdConnect";
-        private static readonly OAuth2Client client = new OAuth2Client(new Uri("https://localhost:44376/connect/authorize"), "UWP", "uwp_uwp_uwp", OAuth2Client.ClientAuthenticationStyle.None);
+        private HttpClient client;
 
 
         public MainPage()
@@ -43,48 +44,60 @@ namespace Uwp.Client
 
         public async void Login()
         {
-            try
+            var options = new OidcClientOptions(
+                authority: "https://localhost:44376",
+                clientId: "UWP",
+                clientSecret: "uwp_uwp_uwp",
+                scope: "openid profile email phone",
+                redirectUri: WebAuthenticationBroker.GetCurrentApplicationCallbackUri().AbsoluteUri,
+                webView: new UwpWebView(enableWindowsAuthentication: false))
             {
-                var nonce = DateTimeOffset.UtcNow.ToString();
-                var logInUriString = client.CreateAuthorizeUrl(
-                    clientId: "UWP",
-                    responseType: "id_token",
-                    scope: "openid profile email phone",
-                    redirectUri: WebAuthenticationBroker.GetCurrentApplicationCallbackUri().AbsoluteUri,
-                    nonce: nonce);
+                Style = OidcClientOptions.AuthenticationStyle.AuthorizationCode
+            };
 
-                var webAuthenticationResult = await WebAuthenticationBroker
-                    .AuthenticateAsync(WebAuthenticationOptions.None, new Uri(logInUriString));
+            var client = new OidcClient(options);
+            var result = await client.LoginAsync();
 
-                await ProcessResponse(webAuthenticationResult);
-            }
-            catch
+            if (!string.IsNullOrEmpty(result.Error))
             {
-                // TODO Handle
+                ResultTextBox.Text = result.Error;
+                return;
             }
-        }
 
-        private async Task ProcessResponse(WebAuthenticationResult webAuthenticationResult)
-        {
-            if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+            var sb = new StringBuilder(128);
+
+            foreach (var claim in result.Claims)
             {
-                var response = new AuthorizeResponse(webAuthenticationResult.ResponseData);
-                var token = JsonObject.Parse(Uri.UnescapeDataString(response.IdentityToken));
-                var userInfoClient = new UserInfoClient(new Uri("https://localhost:44376/connect/userinfo"), response.IdentityToken);
-                var userInfo = await userInfoClient.GetAsync();
-                var user = userInfo.JsonObject;
-                var claims = userInfo.Claims;
-                int i = 5;
+                sb.AppendLine($"{claim.Type}: {claim.Value}");
             }
-            else if (webAuthenticationResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
+
+            sb.AppendLine($"refresh token: {result.RefreshToken}");
+            sb.AppendLine($"access token: {result.AccessToken}");
+
+            ResultTextBox.Text = sb.ToString();
+
+            if (result.Handler == null)
             {
-                // do something when the request failed
+                this.client = new HttpClient();
             }
             else
             {
-                // do something when an unknown error occurred
+                this.client = new HttpClient(result.Handler);
             }
+            this.client.SetBearerToken(result.AccessToken);
+            this.client.BaseAddress = new Uri("https://localhost:44376/api/");
+
+            await GetMessage();
         }
 
+        private async Task GetMessage()
+        {
+            var response = await client.GetAsync("message");
+
+            if (response.IsSuccessStatusCode)
+                MessageTextBox.Text = await response.Content.ReadAsStringAsync();
+            else
+                MessageTextBox.Text = response.ReasonPhrase;
+        }
     }
 }

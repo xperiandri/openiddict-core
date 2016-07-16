@@ -36,6 +36,11 @@
     </Page.TopAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="ResultTextBox" Margin="10" TextWrapping="Wrap"/>
+        <TextBox x:Name="MessageTextBox" Margin="10" TextWrapping="Wrap" Grid.Row="1"/>
     </Grid>
 </Page>
