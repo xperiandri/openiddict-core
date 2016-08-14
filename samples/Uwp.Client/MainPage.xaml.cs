@@ -48,7 +48,8 @@ namespace Uwp.Client
                 authority: "https://localhost:44376",
                 clientId: "UWP",
                 clientSecret: "uwp_uwp_uwp",
-                scope: "openid profile email phone",
+                //scope: "openid profile email phone",
+                scope: "openid profile email phone offline_access", // offline_access = refresh_token
                 redirectUri: WebAuthenticationBroker.GetCurrentApplicationCallbackUri().AbsoluteUri,
                 webView: new UwpWebView(enableWindowsAuthentication: false))
             {
