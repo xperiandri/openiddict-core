@@ -42,10 +42,20 @@ namespace Uwp.Client
             Login();
         }
 
+        private const string baseUrl = "https://localhost:44376/";
+
         public async void Login()
         {
             var options = new OidcClientOptions(
-                authority: "https://localhost:44376",
+                authority: baseUrl,
+                //new ProviderInformation()
+                //{
+                //    IssuerName = "plaMobi",
+                //    AuthorizeEndpoint = baseUrl + "connect/authorize",
+                //    TokenEndpoint = baseUrl + "connect/token",
+                //    UserInfoEndpoint = baseUrl + "connect/userinfo",
+                //    EndSessionEndpoint = baseUrl + "connect/logout"
+                //},
                 clientId: "UWP",
                 clientSecret: "uwp_uwp_uwp",
                 //scope: "openid profile email phone",
