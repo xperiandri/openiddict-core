@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D544447C-D701-46BB-9A5B-C76C612A596B}"
 EndProject
@@ -32,11 +32,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIddict.Models", "src\OpenIddict.Models\OpenIddict.Models.csproj", "{0102A6CC-41A6-4B34-B49E-65AFE95882BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uwp.Client", "samples\Uwp.Client\Uwp.Client.csproj", "{8360E046-C96F-4C2C-8F02-7467B23A0646}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20134BB9-3809-41D2-932D-EBA2964E4BD0}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -227,6 +222,8 @@ Global
 		{0102A6CC-41A6-4B34-B49E-65AFE95882BB}.Release|x86.ActiveCfg = Release|Any CPU
 		{0102A6CC-41A6-4B34-B49E-65AFE95882BB}.Release|x86.Build.0 = Release|Any CPU
 		{8360E046-C96F-4C2C-8F02-7467B23A0646}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8360E046-C96F-4C2C-8F02-7467B23A0646}.Debug|Any CPU.Build.0 = Debug|x86
+		{8360E046-C96F-4C2C-8F02-7467B23A0646}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{8360E046-C96F-4C2C-8F02-7467B23A0646}.Debug|ARM.ActiveCfg = Debug|ARM
 		{8360E046-C96F-4C2C-8F02-7467B23A0646}.Debug|ARM.Build.0 = Debug|ARM
 		{8360E046-C96F-4C2C-8F02-7467B23A0646}.Debug|ARM.Deploy.0 = Debug|ARM

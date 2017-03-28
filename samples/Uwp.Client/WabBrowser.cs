@@ -1,26 +1,28 @@
-﻿using IdentityModel.OidcClient.WebView;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+using IdentityModel.OidcClient;
+using IdentityModel.OidcClient.Browser;
 using System;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 
 namespace Uwp.Client
 {
-    public class UwpWebView : IWebView
+    public class WabBrowser : IBrowser
     {
         private readonly bool _enableWindowsAuthentication;
 
-        public event EventHandler<HiddenModeFailedEventArgs> HiddenModeFailed;
-
-        public UwpWebView(bool enableWindowsAuthentication = false)
+        public WabBrowser(bool enableWindowsAuthentication = false)
         {
             _enableWindowsAuthentication = enableWindowsAuthentication;
         }
 
-        private async Task<InvokeResult> InvokeAsyncCore(InvokeOptions options, bool silentMode)
+        private async Task<BrowserResult> InvokeAsyncCore(BrowserOptions options, bool silentMode)
         {
             var wabOptions = WebAuthenticationOptions.None;
 
-            if (options.ResponseMode == ResponseMode.FormPost)
+            if (options.ResponseMode == OidcClientOptions.AuthorizeResponseMode.FormPost)
             {
                 wabOptions |= WebAuthenticationOptions.UseHttpPost;
             }
@@ -50,76 +52,70 @@ namespace Uwp.Client
             }
             catch (Exception ex)
             {
-                return new InvokeResult
+                return new BrowserResult
                 {
-                    ResultType = InvokeResultType.UnknownError,
+                    ResultType = BrowserResultType.UnknownError,
                     Error = ex.ToString()
                 };
             }
 
             if (wabResult.ResponseStatus == WebAuthenticationStatus.Success)
             {
-                return new InvokeResult
+                return new BrowserResult
                 {
-                    ResultType = InvokeResultType.Success,
+                    ResultType = BrowserResultType.Success,
                     Response = wabResult.ResponseData
                 };
             }
             else if (wabResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
             {
-                return new InvokeResult
+                return new BrowserResult
                 {
-                    ResultType = InvokeResultType.HttpError,
+                    ResultType = BrowserResultType.HttpError,
                     Error = string.Concat(wabResult.ResponseErrorDetail.ToString())
                 };
             }
             else if (wabResult.ResponseStatus == WebAuthenticationStatus.UserCancel)
             {
-                return new InvokeResult
+                return new BrowserResult
                 {
-                    ResultType = InvokeResultType.UserCancel
+                    ResultType = BrowserResultType.UserCancel
                 };
             }
             else
             {
-                return new InvokeResult
+                return new BrowserResult
                 {
-                    ResultType = InvokeResultType.UnknownError,
+                    ResultType = BrowserResultType.UnknownError,
                     Error = "Invalid response from WebAuthenticationBroker"
                 };
             }
         }
 
-        public async Task<InvokeResult> InvokeAsync(InvokeOptions options)
+        public async Task<BrowserResult> InvokeAsync(BrowserOptions options)
         {
             if (string.IsNullOrWhiteSpace(options.StartUrl)) throw new ArgumentException("Missing StartUrl", nameof(options));
             if (string.IsNullOrWhiteSpace(options.EndUrl)) throw new ArgumentException("Missing EndUrl", nameof(options));
 
-            switch (options.InitialDisplayMode)
+            switch (options.DisplayMode)
             {
                 case DisplayMode.Visible:
                     return await InvokeAsyncCore(options, false);
 
                 case DisplayMode.Hidden:
                     var result = await InvokeAsyncCore(options, true);
-                    if (result.ResultType != InvokeResultType.Success)
+                    if (result.ResultType == BrowserResultType.Success)
                     {
-                        var args = new HiddenModeFailedEventArgs(result);
-                        HiddenModeFailed?.Invoke(this, args);
-                        if (!args.Cancel)
-                        {
-                            result = await InvokeAsyncCore(options, false);
-                        }
+                        return result;
                     }
-                    return result;
+                    else
+                    {
+                        result.ResultType = BrowserResultType.Timeout;
+                        return result;
+                    }
             }
 
             throw new ArgumentException("Invalid DisplayMode", nameof(options));
-        }
-
-        public Task StartInvokeAsync(InvokeOptions options)
-        {
-            throw new NotImplementedException();
         }
     }
 }

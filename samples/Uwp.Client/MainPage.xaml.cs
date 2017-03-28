@@ -46,8 +46,9 @@ namespace Uwp.Client
 
         public async void Login()
         {
-            var options = new OidcClientOptions(
-                authority: baseUrl,
+            var options = new OidcClientOptions
+            {
+                Authority = baseUrl,
                 //new ProviderInformation()
                 //{
                 //    IssuerName = "plaMobi",
@@ -56,14 +57,14 @@ namespace Uwp.Client
                 //    UserInfoEndpoint = baseUrl + "connect/userinfo",
                 //    EndSessionEndpoint = baseUrl + "connect/logout"
                 //},
-                clientId: "UWP",
-                clientSecret: "uwp_uwp_uwp",
+                ClientId = "UWP",
+                ClientSecret = "uwp_uwp_uwp",
                 //scope: "openid profile email phone",
-                scope: "openid profile email phone offline_access", // offline_access = refresh_token
-                redirectUri: WebAuthenticationBroker.GetCurrentApplicationCallbackUri().AbsoluteUri,
-                webView: new UwpWebView(enableWindowsAuthentication: false))
-            {
-                Style = OidcClientOptions.AuthenticationStyle.AuthorizationCode
+                Scope = "openid profile email phone offline_access", // offline_access = refresh_token
+                RedirectUri = WebAuthenticationBroker.GetCurrentApplicationCallbackUri().AbsoluteUri,
+                Browser = new WabBrowser(enableWindowsAuthentication: false),
+                Flow = OidcClientOptions.AuthenticationFlow.AuthorizationCode,
+                Policy = new Policy { RequireIdentityTokenSignature = false }
             };
 
             var client = new OidcClient(options);
@@ -77,7 +78,7 @@ namespace Uwp.Client
 
             var sb = new StringBuilder(128);
 
-            foreach (var claim in result.Claims)
+            foreach (var claim in result.User.Claims)
             {
                 sb.AppendLine($"{claim.Type}: {claim.Value}");
             }
@@ -87,13 +88,13 @@ namespace Uwp.Client
 
             ResultTextBox.Text = sb.ToString();
 
-            if (result.Handler == null)
+            if (result.RefreshTokenHandler == null)
             {
                 this.client = new HttpClient();
             }
             else
             {
-                this.client = new HttpClient(result.Handler);
+                this.client = new HttpClient(result.RefreshTokenHandler);
             }
             this.client.SetBearerToken(result.AccessToken);
             this.client.BaseAddress = new Uri("https://localhost:44376/api/");
