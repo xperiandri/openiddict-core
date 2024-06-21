@@ -158,6 +158,12 @@ public partial class App : Application
                                               .SetRedirectUri("com.openiddict.sandbox.uno.client://callback/login/github");
                                    });
                         });
+
+                    // Register the worker responsible for creating the database used to store tokens
+                    // and adding the registry entries required to register the custom URI scheme.
+                    //
+                    // Note: in a real world application, this step should be part of a setup script.
+                    services.AddHostedService<Worker>();
                 })
                 .UseNavigation(RegisterRoutes)
             );
