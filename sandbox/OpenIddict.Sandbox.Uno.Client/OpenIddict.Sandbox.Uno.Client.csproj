@@ -59,6 +59,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenIddict.Client.SystemIntegration\OpenIddict.Client.SystemIntegration.csproj" />
     <ProjectReference Include="..\..\src\OpenIddict.Client.SystemNetHttp\OpenIddict.Client.SystemNetHttp.csproj" />
+    <ProjectReference Include="..\..\src\OpenIddict.Client.UnoIntegration\OpenIddict.Client.UnoIntegration.csproj" />
     <ProjectReference Include="..\..\src\OpenIddict.Client.WebIntegration\OpenIddict.Client.WebIntegration.csproj" />
     <ProjectReference Include="..\..\src\OpenIddict.EntityFrameworkCore\OpenIddict.EntityFrameworkCore.csproj" />
   </ItemGroup>

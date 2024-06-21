@@ -114,10 +114,9 @@ public partial class App : Application
                             // sensitive data like the state tokens produced by OpenIddict.
                             options.AddDevelopmentEncryptionCertificate()
                                    .AddDevelopmentSigningCertificate();
-#if WINDOWS || HAS_UNO_SKIA_LINUX_FB
-                            // Add the operating system integration.
+
                             options.UseSystemIntegration();
-#endif
+                            //options.UseUnoIntegration();
 
                             // Register the System.Net.Http integration and use the identity of the current
                             // assembly as a more specific user agent, which can be useful when dealing with
