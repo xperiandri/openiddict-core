@@ -84,6 +84,7 @@ public partial class App : Application
                     .AddRefitClient<IApiClient>(context))
                 .ConfigureServices((context, services) =>
                 {
+                    services.AddSingleton<IHostApplicationLifetime, UnoHostApplicationLifetime>();
                     services.AddDbContext<DbContext>(options =>
                     {
                         options.UseSqlite($"Filename={Path.Combine(Path.GetTempPath(), "openiddict-sandbox-uno-client.sqlite3")}");
