@@ -42,7 +42,7 @@
     },
     "OpenIddict.Sandbox.Uno.Client (Desktop WSL2)": {
       "commandName": "WSL2",
-      "commandLineArgs": "{ProjectDir}/bin/Debug/net8.0-desktop/OpenIddict.Sandbox.Uno.Client.dll",
+      "commandLineArgs": "{ProjectDir}/bin/Debug/net8.0-desktop/OpenIddict.Sandbox.UnoClient.dll",
       "distributionName": "",
       "compatibleTargetFramework": "desktop"
     }

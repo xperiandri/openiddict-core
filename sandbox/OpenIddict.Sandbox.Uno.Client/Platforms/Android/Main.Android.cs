@@ -14,7 +14,7 @@ using Com.Nostra13.Universalimageloader.Core;
 
 using Microsoft.UI.Xaml.Media;
 
-namespace OpenIddict.Sandbox.Uno.Client.Droid;
+namespace OpenIddict.Sandbox.UnoClient.Droid;
 [global::Android.App.ApplicationAttribute(
     Label = "@string/ApplicationName",
     Icon = "@mipmap/icon",

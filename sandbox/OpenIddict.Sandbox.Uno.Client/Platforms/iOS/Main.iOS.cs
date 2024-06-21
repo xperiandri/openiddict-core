@@ -1,6 +1,6 @@
 using UIKit;
 
-namespace OpenIddict.Sandbox.Uno.Client.iOS;
+namespace OpenIddict.Sandbox.UnoClient.iOS;
 public class EntryPoint
 {
     // This is the main entry point of the application.

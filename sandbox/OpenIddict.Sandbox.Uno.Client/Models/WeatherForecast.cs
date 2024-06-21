@@ -1,4 +1,4 @@
-namespace OpenIddict.Sandbox.Uno.Client.DataContracts;
+namespace OpenIddict.Sandbox.UnoClient.DataContracts;
 
 /// <summary>
 /// A Weather Forecast for a specific date

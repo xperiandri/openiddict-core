@@ -1,4 +1,4 @@
-namespace OpenIddict.Sandbox.Uno.Client;
+namespace OpenIddict.Sandbox.UnoClient;
 
 public class Program
 {

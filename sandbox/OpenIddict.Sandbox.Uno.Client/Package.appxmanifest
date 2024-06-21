@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="OpenIddict.Sandbox.Uno.Client"
+    Name="OpenIddict.Sandbox.UnoClient"
     Publisher="O=OpenIddict"
     Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>OpenIddict.Sandbox.Uno.Client</DisplayName>
-    <PublisherDisplayName>OpenIddict.Sandbox.Uno.Client</PublisherDisplayName>
+    <DisplayName>OpenIddict.Sandbox.UnoClient</DisplayName>
+    <PublisherDisplayName>OpenIddict.Sandbox.UnoClient</PublisherDisplayName>
   </Properties>
 
   <Dependencies>
@@ -30,8 +30,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="OpenIddict.Sandbox.Uno.Client"
-        Description="OpenIddict.Sandbox.Uno.Client">
+        DisplayName="OpenIddict.Sandbox.UnoClient"
+        Description="OpenIddict.Sandbox.UnoClient">
         <uap:SplashScreen />
         <uap:DefaultTile/>
       </uap:VisualElements>

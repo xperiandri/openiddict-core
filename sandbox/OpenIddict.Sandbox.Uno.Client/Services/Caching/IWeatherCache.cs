@@ -1,4 +1,4 @@
-namespace OpenIddict.Sandbox.Uno.Client.Services.Caching;
+namespace OpenIddict.Sandbox.UnoClient.Services.Caching;
 
 public interface IWeatherCache
 {

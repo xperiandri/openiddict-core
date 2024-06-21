@@ -4,7 +4,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-namespace OpenIddict.Sandbox.Uno.Client.Droid;
+namespace OpenIddict.Sandbox.UnoClient.Droid;
 [Activity(
     MainLauncher = true,
     ConfigurationChanges = global::Uno.UI.ActivityHelper.AllConfigChanges,

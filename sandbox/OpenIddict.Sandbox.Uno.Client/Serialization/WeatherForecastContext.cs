@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
-namespace OpenIddict.Sandbox.Uno.Client.DataContracts.Serialization;
+namespace OpenIddict.Sandbox.UnoClient.DataContracts.Serialization;
 /// <summary>
 /// Generated class for System.Text.Json Serialization
 /// </summary>

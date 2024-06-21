@@ -8,7 +8,7 @@ using Uno.Resizetizer;
 
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace OpenIddict.Sandbox.Uno.Client;
+namespace OpenIddict.Sandbox.UnoClient;
 public partial class App : Application
 {
     /// <summary>

@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace OpenIddict.Sandbox.Uno.Client.Services.Caching;
+namespace OpenIddict.Sandbox.UnoClient.Services.Caching;
 public sealed class WeatherCache : IWeatherCache
 {
     private readonly IApiClient _api;

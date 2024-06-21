@@ -1,4 +1,4 @@
-﻿namespace OpenIddict.Sandbox.Uno.Client.Presentation;
+﻿namespace OpenIddict.Sandbox.UnoClient.Presentation;
 
 public sealed partial class LoginPage : Page
 {

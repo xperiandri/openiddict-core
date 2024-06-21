@@ -1,3 +1,3 @@
 var UnoAppManifest = {
-    displayName: "OpenIddict.Sandbox.Uno.Client"
+    displayName: "OpenIddict.Sandbox.UnoClient"
 }

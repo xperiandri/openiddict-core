@@ -11,7 +11,8 @@
 
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
-    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_")).Replace("Uno.", "Uno")</RootNamespace>
+    <!-- https://github.com/unoplatform/uno.extensions/issues/2378 -->
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("Uno.", "Uno"))</RootNamespace>
 
     <!-- Display name -->
     <ApplicationTitle>OpenIddict.Sandbox.Uno.Client</ApplicationTitle>

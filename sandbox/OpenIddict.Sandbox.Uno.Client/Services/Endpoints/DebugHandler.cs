@@ -1,6 +1,6 @@
 using System.Net.Http;
 
-namespace OpenIddict.Sandbox.Uno.Client.Services.Endpoints;
+namespace OpenIddict.Sandbox.UnoClient.Services.Endpoints;
 
 internal class DebugHttpHandler : DelegatingHandler
 {

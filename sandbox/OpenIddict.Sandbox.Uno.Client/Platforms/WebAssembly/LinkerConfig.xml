@@ -1,5 +1,5 @@
 <linker>
-  <assembly fullname="OpenIddict.Sandbox.Uno.Client" />
+  <assembly fullname="OpenIddict.Sandbox.UnoClient" />
 
   <!--
   Uncomment this section when using JSON.NET

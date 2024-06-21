@@ -1,3 +1,3 @@
-namespace OpenIddict.Sandbox.Uno.Client.Models;
+namespace OpenIddict.Sandbox.UnoClient.Models;
 
 public record Entity(string Name);

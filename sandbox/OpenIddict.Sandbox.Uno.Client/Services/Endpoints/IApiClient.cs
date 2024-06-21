@@ -1,6 +1,6 @@
 using Refit;
 
-namespace OpenIddict.Sandbox.Uno.Client.Services.Endpoints;
+namespace OpenIddict.Sandbox.UnoClient.Services.Endpoints;
 [Headers("Content-Type: application/json")]
 public interface IApiClient
 {
