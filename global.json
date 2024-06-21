@@ -20,6 +20,7 @@
     "Microsoft.DotNet.Arcade.Sdk": "8.0.0-beta.23516.4",
     "Microsoft.DotNet.Helix.Sdk": "8.0.0-beta.23516.4",
     "MSBuild.Sdk.Extras": "3.0.44",
-    "MSBuild.SDK.SystemWeb": "4.0.88"
+    "MSBuild.SDK.SystemWeb": "4.0.88",
+    "Uno.Sdk": "5.2.161"
   }
 }

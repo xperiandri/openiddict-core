@@ -1,0 +1,6 @@
+namespace OpenIddict.Sandbox.Uno.Client.Models;
+
+public record AppConfig
+{
+    public string? Environment { get; init; }
+}
