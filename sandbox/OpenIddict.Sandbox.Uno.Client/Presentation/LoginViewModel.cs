@@ -86,12 +86,12 @@ public partial class LoginViewModel : ObservableObject
 
                 // Wait for the user to complete the authorization process and authenticate the callback request,
                 // which allows resolving all the claims contained in the merged principal created by OpenIddict.
-                if (await Task.WhenAny(loginTask, Task.Delay(5000, cancel!.Token)) == loginTask)
+                if (await Task.WhenAny(loginTask, Task.Delay(TimeSpan.FromMinutes(5), cancel!.Token)) == loginTask)
                 {
                     var principal = loginTask.Result.Principal;
                     var dialog = new MessageDialog($"Welcome, {principal.FindFirst(Claims.Name)!.Value}.",
                         "Authentication successful");
-                    await dialog.ShowAsync();
+                    await navigator.ShowMessageDialogAsync(dialog);
                     await navigator.NavigateViewModelAsync<MainViewModel>(this);
                 }
             }
@@ -100,21 +100,21 @@ public partial class LoginViewModel : ObservableObject
             {
                 var dialog = new MessageDialog("The authentication process was aborted.",
                     "Authentication timed out");
-                await dialog.ShowAsync();
+                await navigator.ShowMessageDialogAsync(dialog);
             }
 
             catch (ProtocolException exception) when (exception.Error is Errors.AccessDenied)
             {
                 var dialog = new MessageDialog("The authorization was denied by the end user.",
                     "Authorization denied");
-                await dialog.ShowAsync();
+                await navigator.ShowMessageDialogAsync(dialog);
             }
 
             catch
             {
                 var dialog = new MessageDialog("An error occurred while trying to authenticate the user.",
                     "Authentication failed");
-                await dialog.ShowAsync();
+                await navigator.ShowMessageDialogAsync(dialog);
             }
         }
 

@@ -88,11 +88,11 @@ public partial class MainViewModel : ObservableObject
                     CancellationToken = source.Token,
                     Nonce = result.Nonce
                 }).AsTask();
-                if (await Task.WhenAny(authenticateTask, Task.Delay(5000, cancel!.Token)) == authenticateTask)
+                if (await Task.WhenAny(authenticateTask, Task.Delay(TimeSpan.FromMinutes(5), cancel!.Token)) == authenticateTask)
                 {
                     var dialog = new MessageDialog($"The user was successfully logged out from the {provider} server.",
                         "Logout demand successful");
-                    await dialog.ShowAsync();
+                    await navigator.ShowMessageDialogAsync(dialog);
                     await navigator.NavigateViewModelAsync<LoginViewModel>(this);
                 }
             }
@@ -101,14 +101,14 @@ public partial class MainViewModel : ObservableObject
             {
                 var dialog = new MessageDialog("The logout process was aborted.",
                     "Logout timed out");
-                await dialog.ShowAsync();
+                await navigator.ShowMessageDialogAsync(dialog);
             }
 
             catch
             {
                 var dialog = new MessageDialog("An error occurred while trying to log the user out.",
                     "Logout failed");
-                await dialog.ShowAsync();
+                await navigator.ShowMessageDialogAsync(dialog);
             }
         }
 
