@@ -115,8 +115,8 @@ public partial class App : Application
                             options.AddDevelopmentEncryptionCertificate()
                                    .AddDevelopmentSigningCertificate();
 
-                            options.UseSystemIntegration();
-                            //options.UseUnoIntegration();
+                            //options.UseSystemIntegration();
+                            options.UseUnoIntegration();
 
                             // Register the System.Net.Http integration and use the identity of the current
                             // assembly as a more specific user agent, which can be useful when dealing with

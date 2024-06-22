@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using OpenIddict.Client;
 using OpenIddict.Client.SystemIntegration;
+using OpenIddict.Client.UnoIntegration;
 using static OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlerFilters;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -27,54 +28,53 @@ public static class OpenIddictClientUnoIntegrationExtensions
     /// <returns>The <see cref="OpenIddictClientSystemIntegrationBuilder"/>.</returns>
     public static OpenIddictClientSystemIntegrationBuilder UseUnoIntegration(this OpenIddictClientBuilder builder)
     {
-//        if (builder is null)
-//        {
-//            throw new ArgumentNullException(nameof(builder));
-//        }
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
 
-//        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
-//            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-//        {
-//            throw new PlatformNotSupportedException(SR.GetResourceString(SR.ID0389));
-//        }
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux) &&
+            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            throw new PlatformNotSupportedException(SR.GetResourceString(SR.ID0389));
+        }
 
-//#if WINDOWS
-//        builder.
-//#endif
+        // Register the services responsible for coordinating and managing authentication operations.
+        builder.Services.TryAddSingleton<OpenIddictClientSystemIntegrationMarshal>();
+        builder.Services.TryAddSingleton<OpenIddictClientSystemIntegrationService>();
 
-//        // Register the services responsible for coordinating and managing authentication operations.
-//        builder.Services.TryAddSingleton<OpenIddictClientSystemIntegrationMarshal>();
-//        builder.Services.TryAddSingleton<OpenIddictClientSystemIntegrationService>();
+        builder.Services.TryAddSingleton(static provider => provider.GetServices<IHostedService>()
+            .OfType<OpenIddictClientSystemIntegrationHttpListener>()
+            .Single());
 
-//        builder.Services.TryAddSingleton(static provider => provider.GetServices<IHostedService>()
-//            .OfType<OpenIddictClientSystemIntegrationHttpListener>()
-//            .Single());
+        // Register the built-in filters used by the default OpenIddict client system integration event handlers.
+        builder.Services.TryAddSingleton<RequireAuthenticationNonce>();
+        builder.Services.TryAddSingleton<RequireHttpListenerContext>();
+        builder.Services.TryAddSingleton<RequireInteractiveSession>();
+        builder.Services.TryAddSingleton<RequireProtocolActivation>();
+        builder.Services.TryAddSingleton<RequireSystemBrowser>();
+        builder.Services.TryAddSingleton<RequireWebAuthenticationBroker>();
+        builder.Services.TryAddSingleton<RequireWebAuthenticationResult>();
 
-//        // Register the built-in filters used by the default OpenIddict client system integration event handlers.
-//        builder.Services.TryAddSingleton<RequireAuthenticationNonce>();
-//        builder.Services.TryAddSingleton<RequireHttpListenerContext>();
-//        builder.Services.TryAddSingleton<RequireInteractiveSession>();
-//        builder.Services.TryAddSingleton<RequireProtocolActivation>();
-//        builder.Services.TryAddSingleton<RequireSystemBrowser>();
-//        builder.Services.TryAddSingleton<RequireWebAuthenticationBroker>();
-//        builder.Services.TryAddSingleton<RequireWebAuthenticationResult>();
+        // Register the built-in event handlers used by the OpenIddict client system integration components.
+        // Note: the order used here is not important, as the actual order is set in the options.
+        builder.Services.TryAdd(OpenIddictClientUnoIntegrationHandlers.DefaultHandlers.Select(descriptor => descriptor.ServiceDescriptor));
 
-//        // Register the built-in event handlers used by the OpenIddict client system integration components.
-//        // Note: the order used here is not important, as the actual order is set in the options.
-//        builder.Services.TryAdd(OpenIddictClientSystemIntegrationHandlers.DefaultHandlers.Select(descriptor => descriptor.ServiceDescriptor));
+        // Register the option initializer and the background service used by the OpenIddict client system integration services.
+        // Note: TryAddEnumerable() is used here to ensure the initializers and the background service are only registered once.
+        builder.Services.TryAddEnumerable(
+        [
+            ServiceDescriptor.Singleton<IHostedService, OpenIddictClientSystemIntegrationHttpListener>(),
+            ServiceDescriptor.Singleton<IHostedService, OpenIddictClientSystemIntegrationPipeListener>(),
 
-//        // Register the option initializer and the background service used by the OpenIddict client system integration services.
-//        // Note: TryAddEnumerable() is used here to ensure the initializers and the background service are only registered once.
-//        builder.Services.TryAddEnumerable(
-//        [
-//            ServiceDescriptor.Singleton<IHostedService, OpenIddictClientSystemIntegrationHttpListener>(),
-//            ServiceDescriptor.Singleton<IHostedService, OpenIddictClientSystemIntegrationPipeListener>(),
+            ServiceDescriptor.Singleton<IConfigureOptions<OpenIddictClientOptions>, OpenIddictClientSystemIntegrationConfiguration>(),
+            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientOptions>, OpenIddictClientSystemIntegrationConfiguration>(),
 
-//            ServiceDescriptor.Singleton<IConfigureOptions<OpenIddictClientOptions>, OpenIddictClientSystemIntegrationConfiguration>(),
-//            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientOptions>, OpenIddictClientSystemIntegrationConfiguration>(),
-
-//            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>, OpenIddictClientSystemIntegrationConfiguration>()
-//        ]);
+            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>, OpenIddictClientSystemIntegrationConfiguration>()
+#if WINDOWS
+            , ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>, OpenIddictClientUnoIntegrationConfiguration>()
+#endif
+        ]);
 
         return new OpenIddictClientSystemIntegrationBuilder(builder.Services);
     }

@@ -9,6 +9,7 @@
       net8.0-desktop
     </TargetFrameworks>
       <!--net8.0-browserwasm;-->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UnoSingleProject>true</UnoSingleProject>
     <OutputType>Library</OutputType>
     <!-- Ensures the .xr.xml files are generated in a proper layout folder -->
@@ -49,7 +50,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OpenIddict.Abstractions\OpenIddict.Abstractions.csproj" />
     <ProjectReference Include="..\OpenIddict.Client.SystemIntegration\OpenIddict.Client.SystemIntegration.csproj" />
     <ProjectReference Include="..\OpenIddict.Client\OpenIddict.Client.csproj" />
   </ItemGroup>
+
 </Project>
