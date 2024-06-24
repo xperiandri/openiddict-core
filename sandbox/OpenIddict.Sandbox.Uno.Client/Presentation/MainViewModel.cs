@@ -114,7 +114,7 @@ public partial class MainViewModel : ObservableObject
 
         finally
         {
-            cancel!.Dispose();
+            cancel?.Dispose();
             Cancel = null;
         }
     }

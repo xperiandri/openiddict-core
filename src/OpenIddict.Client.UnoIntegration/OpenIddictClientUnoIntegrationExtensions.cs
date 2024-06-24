@@ -67,13 +67,10 @@ public static class OpenIddictClientUnoIntegrationExtensions
             ServiceDescriptor.Singleton<IHostedService, OpenIddictClientSystemIntegrationHttpListener>(),
             ServiceDescriptor.Singleton<IHostedService, OpenIddictClientSystemIntegrationPipeListener>(),
 
-            ServiceDescriptor.Singleton<IConfigureOptions<OpenIddictClientOptions>, OpenIddictClientSystemIntegrationConfiguration>(),
-            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientOptions>, OpenIddictClientSystemIntegrationConfiguration>(),
+            ServiceDescriptor.Singleton<IConfigureOptions<OpenIddictClientOptions>, OpenIddictClientUnoIntegrationConfiguration>(),
+            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientOptions>, OpenIddictClientUnoIntegrationConfiguration>(),
 
-            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>, OpenIddictClientSystemIntegrationConfiguration>()
-#if WINDOWS
-            , ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>, OpenIddictClientUnoIntegrationConfiguration>()
-#endif
+            ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>, OpenIddictClientUnoIntegrationConfiguration>()
         ]);
 
         return new OpenIddictClientSystemIntegrationBuilder(builder.Services);
@@ -99,7 +96,7 @@ public static class OpenIddictClientUnoIntegrationExtensions
             throw new ArgumentNullException(nameof(configuration));
         }
 
-        configuration(builder.UseSystemIntegration());
+        configuration(builder.UseUnoIntegration());
 
         return builder;
     }

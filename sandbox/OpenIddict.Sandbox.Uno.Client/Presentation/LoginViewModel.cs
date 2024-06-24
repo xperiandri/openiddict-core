@@ -120,7 +120,7 @@ public partial class LoginViewModel : ObservableObject
 
         finally
         {
-            cancel!.Dispose();
+            cancel?.Dispose();
             Cancel = null;
         }
     }
