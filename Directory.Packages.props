@@ -344,6 +344,8 @@
     <PackageVersion Include="MongoDB.Driver"                                                  Version="2.20.0"          />
     <PackageVersion Include="Quartz.Extensions.DependencyInjection"                           Version="3.5.0"           />
 
+    <PackageVersion Include="Uno.Extensions.Hosting.WinUI" Version="4.1.24" />
+    <PackageVersion Include="Uno.Extensions.Storage" Version="4.1.24" />
     <!--
       Note: the following references are exclusively used in the test projects:
     -->

@@ -34,6 +34,10 @@
     <Using Include="OpenIddict.Abstractions.OpenIddictResources" Alias="SR" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Uno.Extensions.Hosting.WinUI" />
+  </ItemGroup>
+
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <!--
     If you encounter this error message:

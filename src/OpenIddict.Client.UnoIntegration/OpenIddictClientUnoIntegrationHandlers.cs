@@ -21,14 +21,17 @@ using static OpenIddict.Client.OpenIddictClientHandlerFilters;
 
 using OpenIddict.Client.SystemIntegration;
 
-using static OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlers;
-using static OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlerFilters;
+//using static OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlers;
+//using static OpenIddict.Client.SystemIntegration.OpenIddictClientSystemIntegrationHandlerFilters;
+using static OpenIddict.Client.UnoIntegration.OpenIddictClientUnoIntegrationHandlerFilters;
 
 #if WINDOWS
 using Microsoft.Windows.AppLifecycle;
 
 #endif
 using Windows.ApplicationModel.Activation;
+using static OpenIddict.Client.UnoIntegration.OpenIddictClientUnoIntegrationHandlers;
+
 
 
 #if !SUPPORTS_HOST_APPLICATION_LIFETIME
@@ -48,63 +51,63 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
         /*
          * Top-level request processing:
          */
-        ResolveRequestUriFromHttpListenerRequest.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.ResolveRequestUriFromHttpListenerRequest.Descriptor,
         ResolveRequestUriFromProtocolActivation.Descriptor,
-        ResolveRequestUriFromWebAuthenticationResult.Descriptor,
-        InferEndpointTypeFromDynamicAddress.Descriptor,
-        RejectUnknownHttpRequests.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.ResolveRequestUriFromWebAuthenticationResult.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.InferEndpointTypeFromDynamicAddress.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RejectUnknownHttpRequests.Descriptor,
 
         /*
          * Authentication processing:
          */
-        WaitMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.WaitMarshalledAuthentication.Descriptor,
 
-        RestoreClientRegistrationFromMarshalledContext.Descriptor,
-        RestoreStateTokenFromMarshalledAuthentication.Descriptor,
-        RestoreStateTokenPrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreHostAuthenticationPropertiesFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreClientRegistrationFromMarshalledContext.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreStateTokenFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreStateTokenPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreHostAuthenticationPropertiesFromMarshalledAuthentication.Descriptor,
 
         RedirectProtocolActivation.Descriptor,
-        ResolveRequestForgeryProtection.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.ResolveRequestForgeryProtection.Descriptor,
 
-        RestoreFrontchannelTokensFromMarshalledAuthentication.Descriptor,
-        RestoreFrontchannelIdentityTokenPrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreFrontchannelAccessTokenPrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreAuthorizationCodePrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreTokenResponseFromMarshalledAuthentication.Descriptor,
-        RestoreBackchannelTokensFromMarshalledAuthentication.Descriptor,
-        RestoreBackchannelIdentityTokenPrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreBackchannelAccessTokenPrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreRefreshTokenPrincipalFromMarshalledAuthentication.Descriptor,
-        RestoreUserinfoDetailsFromMarshalledAuthentication.Descriptor,
-        RestoreMergedPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreFrontchannelTokensFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreFrontchannelIdentityTokenPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreFrontchannelAccessTokenPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreAuthorizationCodePrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreTokenResponseFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreBackchannelTokensFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreBackchannelIdentityTokenPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreBackchannelAccessTokenPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreRefreshTokenPrincipalFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreUserinfoDetailsFromMarshalledAuthentication.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.RestoreMergedPrincipalFromMarshalledAuthentication.Descriptor,
 
-        CompleteAuthenticationOperation.Descriptor,
-        UntrackMarshalledAuthenticationOperation.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.CompleteAuthenticationOperation.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.UntrackMarshalledAuthenticationOperation.Descriptor,
 
         /*
          * Challenge processing:
          */
-        InferBaseUriFromClientUri.Descriptor,
-        AttachDynamicPortToRedirectUri.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.InferBaseUriFromClientUri.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.AttachDynamicPortToRedirectUri.Descriptor,
         AttachInstanceIdentifier.Descriptor,
-        TrackAuthenticationOperation.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.TrackAuthenticationOperation.Descriptor,
 
         /*
          * Sign-out processing:
          */
-        InferLogoutBaseUriFromClientUri.Descriptor,
-        AttachDynamicPortToPostLogoutRedirectUri.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.InferLogoutBaseUriFromClientUri.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.AttachDynamicPortToPostLogoutRedirectUri.Descriptor,
         AttachLogoutInstanceIdentifier.Descriptor,
-        TrackLogoutOperation.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.TrackLogoutOperation.Descriptor,
 
         /*
          * Error processing:
          */
-        AbortAuthenticationDemand.Descriptor,
+        OpenIddictClientSystemIntegrationHandlers.AbortAuthenticationDemand.Descriptor,
 
-        .. OpenIddictClientSystemIntegrationHandlers.Authentication.DefaultHandlers,
-        .. OpenIddictClientSystemIntegrationHandlers.Session.DefaultHandlers
+        .. OpenIddictClientUnoIntegrationHandlers.Authentication.DefaultHandlers,
+        .. OpenIddictClientSystemIntegrationHandlers.Session.DefaultHandlers,
     ]);
 
     /// <summary>
@@ -120,7 +123,7 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
             = OpenIddictClientHandlerDescriptor.CreateBuilder<ProcessRequestContext>()
                 .AddFilter<RequireProtocolActivation>()
                 .UseSingletonHandler<ResolveRequestUriFromProtocolActivation>()
-                .SetOrder(ResolveRequestUriFromHttpListenerRequest.Descriptor.Order + 1_000)
+                .SetOrder(OpenIddictClientSystemIntegrationHandlers.ResolveRequestUriFromHttpListenerRequest.Descriptor.Order + 1_000)
                 .SetType(OpenIddictClientHandlerType.BuiltIn)
                 .Build();
 
@@ -141,9 +144,12 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
                     RequestUri: protocolArgs.Uri),
 #else
                 // TODO: Check for other platforms
-                { ActivationUri: Uri uri } => (
-                    BaseUri: new UriBuilder(uri) { Path = null, Query = null, Fragment = null }.Uri,
-                    RequestUri: uri),
+                {  } => (
+                    BaseUri: new Uri(""),
+                    RequestUri: new Uri("")),
+                //{ ActivationUri: Uri uri } => (
+                //    BaseUri: new UriBuilder(uri) { Path = null, Query = null, Fragment = null }.Uri,
+                //    RequestUri: uri),
 #endif
 
                 _ => throw new InvalidOperationException(SR.GetResourceString(SR.ID0375))
@@ -162,43 +168,12 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
     {
         private readonly IHostApplicationLifetime _lifetime;
         private readonly IOptionsMonitor<OpenIddictClientSystemIntegrationOptions> _options;
-        private readonly OpenIddictClientSystemIntegrationService _service;
-
-#if WINDOWS
-        // HACK: Temporary hack for Uno.Extensions.Navigation.UI that prevent a Window of being created
-        static RedirectProtocolActivation()
-        {
-            Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().Activated += CurrentAppInstance_Activated;
-        }
-
-        internal static string? Identifier;
-
-        private static void CurrentAppInstance_Activated(object? sender, AppActivationArguments e)
-        {
-            if (e.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.Protocol
-                && e.Data is IProtocolActivatedEventArgs protocolArgs)
-            {
-                var _ = RedirectAsync(Identifier!, e);
-                Environment.Exit(0);
-            }
-        }
-
-        private static async Task RedirectAsync(string identifier, AppActivationArguments activatedEventArgs)
-        {
-            var instance = Microsoft.Windows.AppLifecycle.AppInstance.GetInstances().Where(i => i.Key == identifier).FirstOrDefault();
-
-            if (instance is not null && !instance.IsCurrent)
-            {
-                // Redirect to correct instance and close this one
-                await instance.RedirectActivationToAsync(activatedEventArgs);
-            }
-        }
-#endif
+        private readonly OpenIddictClientUnoIntegrationService _service;
 
         public RedirectProtocolActivation(
             IHostApplicationLifetime lifetime,
             IOptionsMonitor<OpenIddictClientSystemIntegrationOptions> options,
-            OpenIddictClientSystemIntegrationService service)
+            OpenIddictClientUnoIntegrationService service)
         {
             _lifetime = lifetime ?? throw new ArgumentNullException(nameof(lifetime));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -262,13 +237,7 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
             try
             {
                 using var source = new CancellationTokenSource(delay: TimeSpan.FromSeconds(10));
-
-#if WINDOWS
-                await RedirectAsync(identifier, activation.AppActivationArguments);
-#else
-                // TODO: Implement for other platforms
-                await Task.Delay(0);
-#endif
+                await _service.RedirectProtocolActivationAsync(activation, identifier, source.Token);
             }
             catch (Exception exception) when (!OpenIddictHelpers.IsFatal(exception))
             {
@@ -298,7 +267,7 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
         /// </summary>
         public static OpenIddictClientHandlerDescriptor Descriptor { get; }
             = OpenIddictClientHandlerDescriptor.CreateBuilder<ProcessChallengeContext>()
-                .AddFilter<RequireInteractiveSession>()
+                .AddFilter<OpenIddictClientSystemIntegrationHandlerFilters.RequireInteractiveSession>()
                 .AddFilter<RequireLoginStateTokenGenerated>()
                 .UseSingletonHandler<AttachInstanceIdentifier>()
                 .SetOrder(PrepareLoginStateTokenPrincipal.Descriptor.Order + 500)
@@ -323,6 +292,7 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
             // should be redirected to a different instance using inter-process communication.
 #if WINDOWS
             var instanceId = Microsoft.Windows.AppLifecycle.AppInstance.FindOrRegisterForKey(_options.CurrentValue.InstanceIdentifier).Key;
+
 #else
             // TODO: Check for other platforms
             var instanceId = _options.CurrentValue.InstanceIdentifier;
@@ -349,7 +319,7 @@ public static partial class OpenIddictClientUnoIntegrationHandlers
         /// </summary>
         public static OpenIddictClientHandlerDescriptor Descriptor { get; }
             = OpenIddictClientHandlerDescriptor.CreateBuilder<ProcessSignOutContext>()
-                .AddFilter<RequireInteractiveSession>()
+                .AddFilter<OpenIddictClientSystemIntegrationHandlerFilters.RequireInteractiveSession>()
                 .AddFilter<RequireLogoutStateTokenGenerated>()
                 .UseSingletonHandler<AttachLogoutInstanceIdentifier>()
                 .SetOrder(PrepareLogoutStateTokenPrincipal.Descriptor.Order + 500)

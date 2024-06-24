@@ -288,11 +288,15 @@ public static class OpenIddictClientUnoIntegrationHelpers
     {
         try
         {
+#if WINDOWS
             await Task.Run(() => Process.Start(new ProcessStartInfo
             {
                 FileName = uri.AbsoluteUri,
                 UseShellExecute = true
             }));
+#else
+            await Task.Delay(0);
+#endif
 
             return true;
         }

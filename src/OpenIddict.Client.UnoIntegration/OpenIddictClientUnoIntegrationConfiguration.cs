@@ -29,9 +29,7 @@ namespace OpenIddict.Client.UnoIntegration;
 /// Contains the methods required to ensure that the OpenIddict client system integration configuration is valid.
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Advanced)]
-public sealed class OpenIddictClientUnoIntegrationConfiguration : IConfigureOptions<OpenIddictClientOptions>,
-                                                                  IPostConfigureOptions<OpenIddictClientOptions>,
-                                                                  IPostConfigureOptions<OpenIddictClientSystemIntegrationOptions>
+public sealed class OpenIddictClientUnoIntegrationConfiguration : IConfigureOptions<OpenIddictClientOptions>
 {
     private readonly OpenIddictClientSystemIntegrationConfiguration _systemIntegrationConfiguration;
 
@@ -52,20 +50,5 @@ public sealed class OpenIddictClientUnoIntegrationConfiguration : IConfigureOpti
 
         // Register the built-in event handlers used by the OpenIddict client system integration components.
         options.Handlers.AddRange(OpenIddictClientUnoIntegrationHandlers.DefaultHandlers);
-    }
-
-    /// <inheritdoc/>
-    public void PostConfigure(string? name, OpenIddictClientOptions options)
-    {
-        _systemIntegrationConfiguration.PostConfigure(name, options);
-    }
-
-    /// <inheritdoc/>
-    public void PostConfigure(string? name, OpenIddictClientSystemIntegrationOptions options)
-    {
-        _systemIntegrationConfiguration.PostConfigure(name, options);
-#if WINDOWS
-        OpenIddictClientUnoIntegrationHandlers.RedirectProtocolActivation.Identifier = options.InstanceIdentifier;
-#endif
     }
 }

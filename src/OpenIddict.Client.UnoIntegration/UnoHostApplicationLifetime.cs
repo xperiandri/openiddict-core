@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Logging;
 
-namespace OpenIddict.Sandbox.UnoClient;
+namespace OpenIddict.Client.UnoIntegration;
 
 public class UnoHostApplicationLifetime : ApplicationLifetime, IHostApplicationLifetime
 {
@@ -17,5 +18,13 @@ public class UnoHostApplicationLifetime : ApplicationLifetime, IHostApplicationL
     {
         this.StopApplication();
         Environment.Exit(0);
+    }
+}
+
+public class ActivationHostApplicationLifetime : ApplicationLifetime
+{
+    public ActivationHostApplicationLifetime(ILogger<ApplicationLifetime> logger) : base(logger)
+    {
+        this.ApplicationStarted.Register(() => this.StopApplication());
     }
 }
