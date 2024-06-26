@@ -159,7 +159,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIddict.Sandbox.Console.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIddict.Sandbox.Uno.Client", "sandbox\OpenIddict.Sandbox.Uno.Client\OpenIddict.Sandbox.Uno.Client.csproj", "{EF52E968-63A4-4313-9870-B033131451D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIddict.Client.UnoTokenPersistance", "src\OpenIddict.Client.UnoTokenPersistance\OpenIddict.Client.UnoTokenPersistance.csproj", "{CCBD46F3-35CF-47CB-BF59-29EB1AC440DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIddict.Client.UnoTokenPersistence", "src\OpenIddict.Client.UnoTokenPersistence\OpenIddict.Client.UnoTokenPersistence.csproj", "{CCBD46F3-35CF-47CB-BF59-29EB1AC440DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenIddict.Client.UnoIntegration", "src\OpenIddict.Client.UnoIntegration\OpenIddict.Client.UnoIntegration.csproj", "{29102633-DFB1-4DA5-90B6-D868427A8143}"
 EndProject
