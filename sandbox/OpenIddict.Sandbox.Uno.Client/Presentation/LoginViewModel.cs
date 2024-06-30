@@ -25,6 +25,8 @@ public partial class LoginViewModel : ObservableObject
             cancel = value;
             OnPropertyChanged(nameof(IsProcessingIn));
             OnPropertyChanged(nameof(IsIdle));
+            loginCommand.NotifyCanExecuteChanged();
+            loginWithParametersCommand.NotifyCanExecuteChanged();
             cancelCommand.NotifyCanExecuteChanged();
         }
     }

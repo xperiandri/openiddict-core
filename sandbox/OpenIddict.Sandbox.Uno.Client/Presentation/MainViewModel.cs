@@ -25,6 +25,7 @@ public partial class MainViewModel : ObservableObject
             cancel = value;
             OnPropertyChanged(nameof(IsProcessingIn));
             OnPropertyChanged(nameof(IsIdle));
+            logoutCommand.NotifyCanExecuteChanged();
             cancelCommand.NotifyCanExecuteChanged();
         }
     }
