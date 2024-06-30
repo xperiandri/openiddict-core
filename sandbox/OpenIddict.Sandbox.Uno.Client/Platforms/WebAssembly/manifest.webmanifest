@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "OpenIddict.Sandbox.Uno.Client",
+  "display": "standalone",
+  "name": "OpenIddict.Sandbox.Uno.Client",
+  "short_name": "OpenIddict.Sandbox.Uno.Client",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

@@ -287,6 +287,47 @@ public class Worker : IHostedService
                 });
             }
 
+            if (await manager.FindByClientIdAsync("uno") is null)
+            {
+                await manager.CreateAsync(new OpenIddictApplicationDescriptor
+                {
+                    ApplicationType = ApplicationTypes.Native,
+                    ClientId = "uno",
+                    ClientType = ClientTypes.Public,
+                    ConsentType = ConsentTypes.Systematic,
+                    DisplayName = "Uno client application",
+                    DisplayNames =
+                    {
+                        [CultureInfo.GetCultureInfo("fr-FR")] = "Application cliente Uno"
+                    },
+                    PostLogoutRedirectUris =
+                    {
+                        new Uri("com.openiddict.sandbox.uno.client:/callback/logout/local")
+                    },
+                    RedirectUris =
+                    {
+                        new Uri("com.openiddict.sandbox.uno.client:/callback/login/local")
+                    },
+                    Permissions =
+                    {
+                        Permissions.Endpoints.Authorization,
+                        Permissions.Endpoints.Logout,
+                        Permissions.Endpoints.Token,
+                        Permissions.GrantTypes.AuthorizationCode,
+                        Permissions.GrantTypes.RefreshToken,
+                        Permissions.ResponseTypes.Code,
+                        Permissions.Scopes.Email,
+                        Permissions.Scopes.Profile,
+                        Permissions.Scopes.Roles,
+                        Permissions.Prefixes.Scope + "demo_api"
+                    },
+                    Requirements =
+                    {
+                        Requirements.Features.ProofKeyForCodeExchange
+                    }
+                });
+            }
+
             // Note: when using introspection instead of local token validation,
             // an application entry MUST be created to allow the resource server
             // to communicate with OpenIddict's introspection endpoint.
