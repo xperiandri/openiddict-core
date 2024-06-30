@@ -60,8 +60,7 @@ public partial class App : Application
 
                         //options.UseSystemIntegration();
                         options.UseUnoIntegration()
-#if ANDROID || IOS
-                            .DisableEmbeddedWebServer()
+#if ANDROID || IOS || MACCATALYST || HAS_UNO_SKIA_MACOS
                             .DisablePipeServer()
 #endif
                         ;
@@ -70,7 +69,14 @@ public partial class App : Application
                         // assembly as a more specific user agent, which can be useful when dealing with
                         // providers that use the user agent as a way to throttle requests (e.g Reddit).
                         options.UseSystemNetHttp()
-                               .SetProductInformation(typeof(App).Assembly);
+                               .SetProductInformation(typeof(App).Assembly)
+#if IOS
+                        // Warning: server certificate validation is disabled to simplify testing the MAUI
+                        // application with the iOS simulator: in production, it SHOULD NEVER be disabled.
+                        .ConfigureHttpClientHandler("Local", handler => handler.ServerCertificateCustomValidationCallback =
+                            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator)
+#endif
+                        ;
 
                         // Add a client registration matching the client application definition in the server project.
                         options.AddRegistration(new OpenIddictClientRegistration
@@ -188,7 +194,8 @@ public partial class App : Application
 #endif
         MainWindow.SetWindowIcon();
 
-        Host = await builder.NavigateAsync<Shell>(async (sp, navigator) => {
+        Host = await builder.NavigateAsync<Shell>(async (sp, navigator) =>
+        {
             await navigator.NavigateViewModelAsync<LoginViewModel>(this);
         });
     }
