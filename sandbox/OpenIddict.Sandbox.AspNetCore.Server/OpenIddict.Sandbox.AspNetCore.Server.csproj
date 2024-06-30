@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
     <PackageReference Include="Quartz.Extensions.Hosting" />
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" />
   </ItemGroup>
 
   <ItemGroup
