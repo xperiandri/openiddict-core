@@ -22,5 +22,18 @@
 		<key>ITSAppUsesNonExemptEncryption</key>
 		<false/>
 		-->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>OpenIddict Uno sandbox app</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.openiddict.sandbox.uno.client</string>
+				</array>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+			</dict>
+		</array>
 	</dict>
 </plist>
