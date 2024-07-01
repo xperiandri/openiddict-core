@@ -55,8 +55,15 @@ public partial class App : Application
 
                         // Register the signing and encryption credentials used to protect
                         // sensitive data like the state tokens produced by OpenIddict.
-                        options.AddDevelopmentEncryptionCertificate()
-                               .AddDevelopmentSigningCertificate();
+                        options
+#if IOS || MACCATALYST
+                            .AddEncryptionCertificate("")
+                            .AddSigningCertificate("")
+#else
+                            .AddDevelopmentEncryptionCertificate()
+                            .AddDevelopmentSigningCertificate()
+#endif
+                            ;
 
                         //options.UseSystemIntegration();
                         options.UseUnoIntegration()
