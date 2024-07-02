@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -55,15 +56,20 @@ public partial class App : Application
 
                         // Register the signing and encryption credentials used to protect
                         // sensitive data like the state tokens produced by OpenIddict.
-                        options
 #if IOS || MACCATALYST
-                            .AddEncryptionCertificate("")
-                            .AddSigningCertificate("")
+                        static X509Certificate2 LoadCertificate(string fileName)
+                        {
+                            var file = StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/Certificates/{fileName}")).AsTask().Result;
+                            return new X509Certificate2(file.Path, "OpenIddict");
+                        }
+                        options
+                            .AddEncryptionCertificate(LoadCertificate("encryption.pfx"))
+                            .AddSigningCertificate(LoadCertificate("signing.pfx"));
 #else
+                        options
                             .AddDevelopmentEncryptionCertificate()
-                            .AddDevelopmentSigningCertificate()
+                            .AddDevelopmentSigningCertificate();
 #endif
-                            ;
 
                         //options.UseSystemIntegration();
                         options.UseUnoIntegration()
