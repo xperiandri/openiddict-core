@@ -22,7 +22,7 @@ public static class OpenIddictClientUnoIntegrationExtensions
     /// <param name="builder"></param>
     /// <param name="configureDelegate"></param>
     /// <param name="applicationName"></param>
-    public static async Task<IApplicationBuilder> UseOpenIddictClientActivationHandlingAsync(this IApplicationBuilder builder, Action<IServiceCollection> configureDelegate, string? applicationName = null)
+    public static async Task<IApplicationBuilder> UseOpenIddictClientActivationHandlingAsync(this IApplicationBuilder builder, Action<HostBuilderContext, IServiceCollection> configureDelegate, string? applicationName = null)
     {
         // TODO: Check activation here
 #if WINDOWS || DESKTOP8_0_OR_GREATER
@@ -37,7 +37,7 @@ public static class OpenIddictClientUnoIntegrationExtensions
                 }
                 services.AddSingleton(ctx.HostingEnvironment);
 #endif
-                configureDelegate(services);
+                configureDelegate(ctx, services);
                 services.AddSingleton<IHostApplicationLifetime, ActivationHostApplicationLifetime>();
             })
             .Build();
@@ -56,7 +56,7 @@ public static class OpenIddictClientUnoIntegrationExtensions
                     ctx.HostingEnvironment.ApplicationName = applicationName;
                 }
                 services.AddSingleton(ctx.HostingEnvironment);
-                configureDelegate(services);
+                configureDelegate(ctx, services);
             }));
     }
 

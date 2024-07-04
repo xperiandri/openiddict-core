@@ -1,4 +1,6 @@
 using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +10,10 @@ using OpenIddict.Client;
 using Uno.Resizetizer;
 
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using static OpenIddict.Sandbox.UnoClient.OpenIddictClientCryptographicKeys;
 
 namespace OpenIddict.Sandbox.UnoClient;
+
 public partial class App : Application
 {
     /// <summary>
@@ -27,7 +31,7 @@ public partial class App : Application
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         var builder = await this.CreateBuilder(args)
-            .UseOpenIddictClientActivationHandlingAsync(services =>
+            .UseOpenIddictClientActivationHandlingAsync((ctx, services) =>
             {
                 services.AddDbContext<DbContext>(options =>
                 {
@@ -56,20 +60,19 @@ public partial class App : Application
 
                         // Register the signing and encryption credentials used to protect
                         // sensitive data like the state tokens produced by OpenIddict.
-#if IOS || MACCATALYST
-                        static X509Certificate2 LoadCertificate(string fileName)
+                        bool platformSupportsDevelopmentCertificates =
+                            !(RuntimeInformation.IsOSPlatform(OSPlatform.Create("ios")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("maccatalyst")));
+                        if (ctx.HostingEnvironment.IsDevelopment() || platformSupportsDevelopmentCertificates)
                         {
-                            var file = StorageFile.GetFileFromApplicationUriAsync(new Uri($"ms-appx:///Assets/Certificates/{fileName}")).AsTask().Result;
-                            return new X509Certificate2(file.Path, "OpenIddict");
+                            options.AddDevelopmentEncryptionCertificate()
+                                   .AddDevelopmentSigningCertificate();
                         }
-                        options
-                            .AddEncryptionCertificate(LoadCertificate("encryption.pfx"))
-                            .AddSigningCertificate(LoadCertificate("signing.pfx"));
-#else
-                        options
-                            .AddDevelopmentEncryptionCertificate()
-                            .AddDevelopmentSigningCertificate();
-#endif
+                        else
+                        {
+                            var provider = CngProvider.MicrosoftSoftwareKeyStorageProvider;
+                            options.AddEncryptionKey(GetRsaCngKey("Ecierge encryption key", CngKeyUsages.Decryption, provider))
+                                   .AddSigningKey(GetRsaCngKey("Ecierge signing key", CngKeyUsages.Signing, provider));
+                        }
 
                         //options.UseSystemIntegration();
                         options.UseUnoIntegration()
