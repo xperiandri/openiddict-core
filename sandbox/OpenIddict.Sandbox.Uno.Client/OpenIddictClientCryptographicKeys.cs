@@ -1,6 +1,6 @@
-﻿using System;
-namespace OpenIddict.Sandbox.UnoClient;
+﻿namespace OpenIddict.Sandbox.UnoClient;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -15,7 +15,7 @@ internal static class OpenIddictClientCryptographicKeys
     {
         name = name ?? throw new ArgumentNullException(nameof(name));
 
-        CngKey key;
+        System.Security.Cryptography.CngKey key;
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
         if (CngKey.Exists(name, provider, CngKeyOpenOptions.UserKey))
@@ -50,7 +50,8 @@ internal static class OpenIddictClientCryptographicKeys
 }
 
 #if IOS || MACCATALYST
-public static class CgnKey
+
+public static class CngKey
 {
     public static bool Exists(string name, CngProvider provider, CngKeyOpenOptions options)
     {
