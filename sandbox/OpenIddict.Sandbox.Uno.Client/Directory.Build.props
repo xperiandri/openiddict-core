@@ -17,9 +17,13 @@
 
   <!-- See https://aka.platform.uno/using-uno-sdk#implicit-packages for more information regarding the Implicit Packages version properties. -->
   <PropertyGroup>
-    <UnoExtensionsVersion>4.1.24</UnoExtensionsVersion>
-    <UnoToolkitVersion>6.0.24</UnoToolkitVersion>
-    <UnoThemesVersion>5.0.13</UnoThemesVersion>
+    <UnoExtensionsVersion>4.2.2</UnoExtensionsVersion> <!-- https://www.nuget.org/packages/Uno.Extensions.Core -->
+    <UnoLoggingVersion>4.1.1</UnoLoggingVersion> <!-- https://www.nuget.org/packages/Uno.Core.Extensions.Logging -->
+    <UnoResizetizerVersion>1.5.2</UnoResizetizerVersion> <!-- https://www.nuget.org/packages/Uno.Resizetizer -->
+    <UnoToolkitVersion>6.1.8</UnoToolkitVersion> <!-- https://www.nuget.org/packages/Uno.Toolkit -->
+    <UnoThemesVersion>5.1.7</UnoThemesVersion> <!-- https://www.nuget.org/packages/Uno.Themes -->
+    <UnoUniversalImageLoaderVersion>1.9.37</UnoUniversalImageLoaderVersion> <!-- https://www.nuget.org/packages/Uno.UniversalImageLoader -->
+    <UnoWasmBootstrapVersion>9.0.0-dev.104</UnoWasmBootstrapVersion> <!-- https://www.nuget.org/packages/Uno.Wasm.Bootstrap -->
     <UnoCSharpMarkupVersion>5.2.14</UnoCSharpMarkupVersion>
   </PropertyGroup>
 </Project>
